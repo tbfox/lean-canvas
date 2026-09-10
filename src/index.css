@@ -1,0 +1,264 @@
+:root {
+  --bg: #f6f5f2;
+  --panel: #ffffff;
+  --ink: #1b1b1a;
+  --muted: #6c6a65;
+  --line: #d8d5cd;
+  --accent: #b4552d;
+  --accent-soft: #fbf1ea;
+  --radius: 6px;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a19;
+    --panel: #232320;
+    --ink: #ece9e2;
+    --muted: #97938a;
+    --line: #38372f;
+    --accent: #e08a5c;
+    --accent-soft: #2c2621;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 20px 16px 56px;
+}
+
+/* ---------- top bar ---------- */
+
+.bar {
+  margin-bottom: 16px;
+}
+
+.bar__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar__brand {
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin: 0 8px 0 0;
+}
+
+.bar__name {
+  flex: 1 1 220px;
+  min-width: 160px;
+  font-size: 15px;
+  font-weight: 550;
+  padding: 7px 10px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.bar__select {
+  max-width: 220px;
+  padding: 7px 8px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.bar button {
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.bar button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.bar button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.bar button.is-danger {
+  color: #fff;
+  background: #b23b30;
+  border-color: #b23b30;
+}
+
+.bar__confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.bar__status {
+  height: 18px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.bar__status--saved {
+  color: #4a7c4e;
+}
+
+.bar__status--error {
+  color: #b23b30;
+}
+
+/* ---------- the canvas grid ----------
+   Five columns across the top; Solution/Key Metrics and Unfair
+   Advantage/Channels each split their column in half. Problem, UVP and
+   Customer Segments run full height with a sub-block at the bottom.
+   Costs and Revenue span the full width underneath. */
+
+.canvas {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: minmax(150px, auto) minmax(150px, auto) minmax(78px, auto) minmax(110px, auto);
+  grid-template-areas:
+    "problem  solution     uvp      advantage segments"
+    "problem  metrics      uvp      channels  segments"
+    "alternatives metrics  concept  channels  adopters"
+    "costs    costs        costs    revenue   revenue";
+  gap: 8px;
+}
+
+@media (max-width: 1080px) {
+  .canvas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-template-areas:
+      "problem      segments"
+      "alternatives adopters"
+      "uvp          uvp"
+      "concept      concept"
+      "solution     channels"
+      "metrics      advantage"
+      "costs        revenue";
+  }
+}
+
+@media (max-width: 620px) {
+  .canvas {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "problem" "alternatives" "segments" "adopters" "uvp" "concept"
+      "solution" "channels" "metrics" "advantage" "costs" "revenue";
+  }
+}
+
+/* ---------- a block ---------- */
+
+.block {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 10px 12px 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.block.is-focused {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.block--uvp {
+  background: var(--accent-soft);
+}
+
+.block__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: text;
+}
+
+.block__n {
+  display: inline-grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--panel);
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.block__title {
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.block__hint {
+  margin: 3px 0 6px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.block__input {
+  flex: 1;
+  width: 100%;
+  min-height: 48px;
+  padding: 0;
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: none;
+  border: none;
+  resize: none;
+  overflow: hidden;
+}
+
+.block__input:focus {
+  outline: none;
+}
+
+.block__input::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.loading,
+.error-page {
+  padding: 40px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.error-page {
+  line-height: 1.7;
+}
